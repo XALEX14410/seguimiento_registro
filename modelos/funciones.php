@@ -1,6 +1,6 @@
 <?php
-include_once ('../modelos/basededatos.php');    
-// include_once realpath(dirname(__FILE__)."/../modelos/database.php");
+// Incluimos la clase BaseDatos para obtener la conexión
+
 
 // Función para procesar el formulario y guardar los datos en la base de datos
 function procesarFormulario($titulo, $descripcion, $imagen, $video, $conn) {
@@ -91,9 +91,10 @@ function obtenerMensajeActivo() {
     }
 }
 
-
+// Función para obtener el mensaje activo (versión para comprobación)
 function obtenerMensajeActivo_comprobacion() {
-    global $conn; // Hacemos global la variable de conexión
+    $db = new BaseDatos();
+    $conn = $db->getBd();
 
     // Verificamos si la conexión está establecida
     if ($conn) {
@@ -115,10 +116,10 @@ function obtenerMensajeActivo_comprobacion() {
         echo "<p>Error: No se pudo conectar a la base de datos.</p>";
         return NULL;
     }
+    return NULL;
 }
 
-
-// Función para generar el HTML del formulario basado en el mensaje activo en el sistema
+// Función para generar el HTML del formulario basado en el mensaje activo
 function presentacion() {
     $mensaje_activo = obtenerMensajeActivo_comprobacion();
 
@@ -129,17 +130,13 @@ function presentacion() {
         <div class="formulario">
             <h3 class="main__titulo subtitle">' . $mensaje_activo['titulo'] . '</h3>
             <div class="formulario__contenedor">
-                <!-- Imagen del logo -->
                 <div class="formulario__img">
                     <img src="' . $mensaje_activo['imagen'] . '" class="img img-form" alt="Imagen del formulario"/>
                 </div>
-                
             </div>
             <div class="formulario__contenedor">
-            <div class="formulario__img">
-                <!-- Video del formulario -->
-                ';
-        // Verificar si se proporcionó un video
+                <div class="formulario__img">';
+        
         if ($mensaje_activo['video']) {
             $video_url = 'https://www.youtube.com/embed/' . obtenerIdYouTube($mensaje_activo['video']);
             $html .= '<iframe width="560" height="315" src="' . $video_url . '" frameborder="0" allowfullscreen></iframe>';
@@ -155,31 +152,15 @@ function presentacion() {
     } else {
         // Mostrar un mensaje de error si no hay un mensaje activo
         $html = '<div class="formulario">
-        <h3 class="main__titulo subtitle">LFTECH</h3>
-        <div class="formulario__contenedor">
-            <!-- Imagen del logo -->
-            <div class="formulario__img">
-                <img src="img/2.svg" class="img img-form" alt="Imagen del formulario"/>
-            </div>
+            <h3 class="main__titulo subtitle">LFTECH</h3>
+            <div class="formulario__contenedor">
+                <div class="formulario__img">
+                    <img src="img/2.svg" class="img img-form" alt="Imagen del formulario"/>
+                </div>
             </div>
         </div>';
     }
-    
 
-
-
-    // Retornar el HTML generado
     return $html;
 }
-
-
-            
-            
-
-            
-
 ?>
-
-
-
-
