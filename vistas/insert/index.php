@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Selección</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/estilos.css">
+  <link rel="stylesheet" href="./../css/estilos.css">
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -17,13 +17,14 @@
       <div id="contentContainer" class="mb-3 border p-3 rounded bg-light">
         <p><i class="bi bi-info-circle"></i> Aquí puedes generar tus selecciones de manera rápida.</p>
       </div>
-      
+      <form method="POST" id="form_pregunta">
       <div class="envio_perron text-end mt-3">
         <!-- Botón de envío con icono dentro -->
         <button class="btn btn-success" id="saveButton">
           <i class="bi bi-send"></i> Enviar
         </button>
       </div>
+      </form>
     </section>
 
     <!-- Botón flotante -->
@@ -38,6 +39,7 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script src="./js/script.js"></script>
+  <script src="./../js/script.js"></script>
+  <script src="./../js/insert/dbo_pregunta.js"></script>
 </body>
 </html>

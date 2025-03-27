@@ -1,9 +1,9 @@
 <?php
 include_once('../modelos/basededatos.php');
-include_once('../modelos/presentaciones.php');
+include_once('../modelos/listas1.php');
 
-// Crear una instancia de la clase Presentaciones
-$presentaciones = new Presentaciones();
+// Crear una instancia de la clase consulta_observador
+$consulta_observador = new consulta_observador();
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ $presentaciones = new Presentaciones();
     }
     
     .tabla {
-        width: 90%;
+        /* width: 90%; */
         border-collapse: collapse;
         table-layout: fixed;
     }
@@ -109,20 +109,8 @@ $presentaciones = new Presentaciones();
 </head>
 <body>
     <h1 style="text-align: center; color: #333;">Listado de Presentaciones</h1>
-    <table class="tabla">
-        <thead>
-            <tr class="tabla__fila1">
-                <th class="tabla__celda color1  bold size1">Título</th>
-                <th class="tabla__celda color1  bold size1">Imagen</th>
-                <th class="tabla__celda color1  bold size1">Video</th>
-                <th class="tabla__celda color1  bold size1">Descripción</th>
-                <th class="tabla__celda color1  bold size1">En Sistema</th>
-                <th class="tabla__celda color1  bold size1">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php echo $presentaciones->generarContenidoTabla(); ?>
-        </tbody>
-    </table>
+    
+            <?php echo $consulta_observador->obtener_respuestas(); ?>
+
 </body>
 </html>
