@@ -94,7 +94,6 @@ include_once("modelos/generar_inputs.php");
         .input_text {
             width: 100%;
             padding: 8px;
-       
             border: 1px solid #ccc;
             border-radius: 4px;
         }
@@ -120,53 +119,74 @@ include_once("modelos/generar_inputs.php");
             margin: 0 auto;
             padding: 20px;
         }
+        .soporte-link {
+            color: #d9534f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .soporte-link:hover {
+            text-decoration: underline;
+        }
+        .sin-preguntas {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="form-container">
+<div class="form-container">
+    <?php if ($id_form > 0) { ?>
         <h1>Formulario de Respuestas</h1>
         <?php echo presentacion(); ?>
-        <?php if (!empty($mensaje_exito)): ?>
-            <div class="success"><?php echo $mensaje_exito; ?></div>
-        <?php endif; ?>
-        
-        <?php if (!empty($mensaje_error)): ?>
-            <div class="error"><?php echo $mensaje_error; ?></div>
-        <?php endif; ?>
-        
-        <form method="POST" action="">
-            <?php if ($resultado_preguntas && $resultado_preguntas->num_rows > 0): ?>
-                <?php while ($pregunta = $resultado_preguntas->fetch_assoc()): ?>
-                    <?php
-                    // Convertir las cadenas de texto en arreglos PHP
-                    $preguntas = json_decode($pregunta['preguntas']);
-                    $tipos_preguntas = json_decode($pregunta['tipo_pregunta']);
-
-                    // Verificar si la decodificación fue exitosa
-                    if (json_last_error() === JSON_ERROR_NONE && is_array($preguntas) && is_array($tipos_preguntas)) {
-                        // Iterar sobre las preguntas y tipos de preguntas
-                        foreach ($preguntas as $i => $texto_pregunta) {
-                            $tipo_pregunta = $tipos_preguntas[$i] ?? 'Desconocido';
-                            ?>
-                            <div class="pregunta">
-                                <label><?php echo htmlspecialchars($texto_pregunta); ?></label>
-                                <div class="inputs_xd">
-                                    <?php echo generarInput($tipo_pregunta, $i); ?>
-                                </div>
+    <?php } ?>
+    <?php if (!empty($mensaje_exito)) { ?>
+        <div class="success"><?php echo $mensaje_exito; ?></div>
+    <?php } ?>
+    
+    <?php if (!empty($mensaje_error)) { ?>
+        <div class="error"><?php echo $mensaje_error; ?></div>
+    <?php } ?>
+    
+    <form method="POST" action="">
+        <?php if ($resultado_preguntas && $resultado_preguntas->num_rows > 0) { ?>
+            <?php while ($pregunta = $resultado_preguntas->fetch_assoc()) { ?>
+                <?php
+                // Convertir las cadenas de texto en arreglos PHP
+                $preguntas = json_decode($pregunta['preguntas']);
+                $tipos_preguntas = json_decode($pregunta['tipo_pregunta']);
+                
+                // Verificar si la decodificación fue exitosa
+                if (json_last_error() === JSON_ERROR_NONE && is_array($preguntas) && is_array($tipos_preguntas)) {
+                    // Iterar sobre las preguntas y tipos de preguntas
+                    foreach ($preguntas as $i => $texto_pregunta) {
+                        $tipo_pregunta = $tipos_preguntas[$i] ?? 'Desconocido';
+                        ?>
+                        <div class="pregunta">
+                            <label><?php echo htmlspecialchars($texto_pregunta); ?></label>
+                            <div class="inputs_xd">
+                                <?php echo generarInput($tipo_pregunta, $i); ?>
                             </div>
-                            <?php
-                        }
-                    } else {
-                        echo "<p class='error'>Error al decodificar las preguntas.</p>";
+                        </div>
+                        <?php
                     }
-                    ?>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No hay preguntas disponibles para este formulario.</p>
-            <?php endif; ?>
+                } else {
+                    echo "<p class='error'>Error al decodificar las preguntas.</p>";
+                }
+                ?>
+            <?php } ?>
+        <?php } else { ?>
+            <p>No hay preguntas disponibles para este formulario.</p>
+            <p>¿Necesitas ayuda? <a href="soporte.php?error=formulario&id_form=<?php echo $id_form; ?>" class="soporte-link">Contacta a soporte técnico</a></p>
+        <?php } ?>
+        <?php if ($id_form > 0) { ?>
 
-            <button type="submit">Enviar Respuesta</button>
-        </form>
-    </div>
+    
+        <button type="submit">Enviar Respuesta</button>
+        <?php } ?>
+    </form>
+</div>
 </body>
 </html>
