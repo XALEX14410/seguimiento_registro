@@ -6,9 +6,8 @@ include_once realpath(dirname(__FILE__)."/../modelos/basededatos.php");
 class bd_pregunta extends BaseDatos {
     // Agrega nueva pregunta
     public function agrega_pregunta($datos_dbo_pregunta) {
-        $sql = "INSERT INTO `pregunta`(`id_pregunta`, `id_seguimiento`, `preguntas`, `tipo_pregunta`) VALUES (
-                    '".$datos_dbo_pregunta->getidPregunta()."', 
-                    '".$datos_dbo_pregunta->getidSeguimiento()."',
+        $sql = "INSERT INTO `pregunta`(`preguntas`, `tipo_pregunta`) VALUES (
+
                     '".$datos_dbo_pregunta->getPreguntas()."',
                     '".$datos_dbo_pregunta->getTipoPregunta()."'
                 )";

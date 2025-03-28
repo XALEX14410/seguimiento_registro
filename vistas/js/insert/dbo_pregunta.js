@@ -1,104 +1,93 @@
-document.getElementById("form_pregunta").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evitar el envío tradicional del formulario 
-    // Recolectar los valores de los inputs y selects
+
+// Función para recolectar los nombres de las opciones seleccionadas en los selects
+function collectSelectedOptions() {
+    var selectedOptions = [];
+    // Obtener todos los selects
+    var selects = document.querySelectorAll("select");
+    
+    // Recorrer los selects y recolectar los nombres de las opciones seleccionadas
+    selects.forEach(function(select) {
+        var selectedOption = select.options[select.selectedIndex].text;
+        selectedOptions.push(selectedOption);
+    });
+
+    return selectedOptions;
+}
+
+// Función para imprimir el contenido de #select1
+function printSelect1Value() {
+    var select1 = document.getElementById("select1");
+    if (select1) {
+        console.log("Valor seleccionado en #select1:", select1.value);
+    } else {
+        console.log("No se encontró el elemento #select1");
+    }
+}
+
+// Ejemplo de cómo usar las funciones anteriores
+function saveAndPrint() {
     var inputValues = collectInputTextValues();
     var selectedOptions = collectSelectedOptions();
     
-    // Combinar todos los valores para enviar como preguntas
-    var todasLasPreguntas = {
-        inputs: inputValues,
-        selects: selectedOptions
-    };
+    console.log("Valores de los .input_text:", inputValues);
+    console.log("Opciones seleccionadas:", selectedOptions);
+    printSelect1Value();
+    return inputValues,selectedOptions;
+}
+
+// Puedes llamar a saveAndPrint() en un evento, como al hacer clic en un botón
+document.getElementById("saveButton").addEventListener("click", saveAndPrint);
+document.getElementById("form_pregunta").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar que el formulario se envíe de la manera tradicional
     
-    // Convertir a JSON para enviar
-    var preguntasJSON = JSON.stringify(todasLasPreguntas);
+    // Obtener los valores directamente en este scope
+ // Obtener valores
+ var inputValues = collectInputTextValues();
+ var selectedOptions = collectSelectedOptions();
+ 
+ // Convertir arreglos a formato string "[valor1,valor2,...]"
+ var preguntasString = "[" + inputValues.map(v => `"${v}"`).join(",") + "]";
+ var tiposString = "[" + selectedOptions.map(v => `"${v}"`).join(",") + "]";
+ console.log("Preguntas:", preguntasString);
+    console.log("Tipos:", tiposString);
+ // Crear FormData
+ var formData = new FormData();
+ formData.append("preguntas", preguntasString); // Ejemplo: ["preg1","preg2"]
+ formData.append("tipo_pregunta", tiposString); // Ejemplo: ["tipo1","tipo2"]
 
-    // Crear el objeto FormData para enviar
-    var formData = new FormData();
-    
-    
-    formData.append("preguntas", preguntasJSON);
-    formData.append("tipo_pregunta", "mixto"); // Puedes ajustar esto según necesites
-
-    // Mostrar en consola lo que se enviará (para depuración)
-    console.log("Datos a enviar:", {
-
-        preguntas: todasLasPreguntas,
-        tipo_pregunta: "mixto"
-    });
-
-    // Realizar la petición AJAX
+    // Realizar el POST usando Fetch API
     fetch("./../../controladores/insert/ct_pregunta.php", {
         method: "POST",
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.text()) // Procesar la respuesta del servidor
     .then(data => {
-        // Manejar la respuesta del servidor
+        // Mostrar la respuesta usando SweetAlert
         if (data.includes("exitosamente")) {
             Swal.fire({
                 title: 'Éxito!',
-                text: 'Pregunta insertada correctamente',
+                text: 'Pregunta insertada exitosamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                location.reload(); // Recargar la página después de insertar
+                location.reload(); // Recargar la página tras éxito
             });
         } else {
             Swal.fire({
                 title: 'Error',
-                html: 'Error al insertar la pregunta: <br><b>' + data + '</b>',
+                html: 'Hubo un problema al insertar la pregunta: <br><b>' + data + '</b>',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
-        }
+        }        
     })
     .catch(error => {
         console.error('Error:', error);
         Swal.fire({
             title: 'Error',
-            text: 'Error en la conexión con el servidor',
+            text: 'Hubo un error al enviar los datos.',
             icon: 'error',
             confirmButtonText: 'Aceptar'
         });
     });
 });
-
-// Función para recolectar valores de inputs de texto
-function collectInputTextValues() {
-    var inputValues = [];
-    var inputs = document.querySelectorAll(".input_text");
-    
-    inputs.forEach(function(input) {
-        // Solo agregar si tiene valor
-        if (input.value.trim() !== '') {
-            inputValues.push({
-                id: input.id,
-                name: input.name,
-                value: input.value
-            });
-        }
-    });
-
-    return inputValues;
-}
-
-// Función para recolectar opciones seleccionadas en selects
-function collectSelectedOptions() {
-    var selectedOptions = [];
-    var selects = document.querySelectorAll("select");
-    
-    selects.forEach(function(select) {
-        // Solo agregar si tiene una selección válida (no la opción por defecto)
-        if (select.selectedIndex > 0) {
-            selectedOptions.push({
-                id: select.id,
-                name: select.name,
-                selectedValue: select.value,
-                selectedText: select.options[select.selectedIndex].text
-            });
-        }
-    });
-
-    return selectedOptions;
-}
