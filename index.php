@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Obtener el id_pregunta
         $id_pregunta = 0;
-        $sql_pregunta = "SELECT id_pregunta FROM pregunta WHERE id_seguimiento = $id_form LIMIT 1";
+        $sql_pregunta = "SELECT id_pregunta FROM pregunta WHERE id_pregunta = $id_form LIMIT 1";
         $result = $conn->query($sql_pregunta);
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 VALUES (1, NOW(), 'activo', $inicializador, 'Encuesta realizada')";
             if ($conn->query($sql_seguimiento)) {
                 // Redireccionar para evitar reenvío al recargar
-                header("Location: ".$_SERVER['PHP_SELF']."?id=".$inicializador."&id_form=".$id_form."&exito=1");
+                header("Location: ".$_SERVER['PHP_SELF']."?id_form=".$id_form."&exito=1");
                 exit();
             } else {
                 $mensaje_error = "Error al guardar el seguimiento: " . htmlspecialchars($conn->error);
@@ -63,7 +63,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == 1) {
 }
 
 // Obtener las preguntas basadas en el id_form
-$sql_preguntas = "SELECT `id_pregunta`, `id_seguimiento`, `preguntas`, `tipo_pregunta` FROM `pregunta` WHERE id_seguimiento = $id_form";
+$sql_preguntas = "SELECT `id_pregunta`,  `preguntas`, `tipo_pregunta` FROM `pregunta` WHERE `id_pregunta` = $id_form";
 $resultado_preguntas = $conn->query($sql_preguntas);
 
 // Cerrar conexión
