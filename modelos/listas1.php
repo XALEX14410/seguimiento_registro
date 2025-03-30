@@ -21,7 +21,7 @@ class consulta_observador extends BaseDatos // Heredar de listas_select
 
                 echo "<td>" . htmlspecialchars($fila['preguntas']) . "</td>";
                 echo "<td>" . htmlspecialchars($fila['tipo_pregunta']) . "</td>";
-                echo "<td><a href='editar_pregunta.php?id=" . urlencode($fila['id_pregunta']) . "'>Editar</a></td>";
+                echo "<td><a href='./../controladores/update/editar_pregunta.php?id=" . urlencode($fila['id_pregunta']) . "'>Editar</a></td>";
                 echo "</tr>";
             }
             echo "      </tbody></table>";
