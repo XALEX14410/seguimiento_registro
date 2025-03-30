@@ -8,17 +8,17 @@ class consulta_observador extends BaseDatos // Heredar de listas_select
     // Método para obtener todas las preguntas
     public function obtener_preguntas()
     {
-        $sql = "SELECT `id_pregunta`, `id_seguimiento`, `preguntas`, `tipo_pregunta` FROM `pregunta`";
+        $sql = "SELECT `id_pregunta`, `preguntas`, `tipo_pregunta` FROM `pregunta`";
         $con = $this->getBD();
         $resultado = $con->query($sql);
         if ($resultado && $resultado->num_rows > 0) {
             echo "<table class='tabla' border='1'>   <thead>";
-            echo "<tr class='tabla__fila1'><th>ID Pregunta</th><th>ID Seguimiento</th><th>Pregunta</th><th>Tipo Pregunta</th><th>Acciones</th></tr>         </thead>
+            echo "<tr class='tabla__fila1'><th>ID Pregunta</th><th>Pregunta</th><th>Tipo Pregunta</th><th>Acciones</th></tr>         </thead>
         <tbody>";
             while ($fila = $resultado->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($fila['id_pregunta']) . "</td>";
-                echo "<td>" . htmlspecialchars($fila['id_seguimiento']) . "</td>";
+
                 echo "<td>" . htmlspecialchars($fila['preguntas']) . "</td>";
                 echo "<td>" . htmlspecialchars($fila['tipo_pregunta']) . "</td>";
                 echo "<td><a href='editar_pregunta.php?id=" . urlencode($fila['id_pregunta']) . "'>Editar</a></td>";
@@ -45,7 +45,7 @@ class consulta_observador extends BaseDatos // Heredar de listas_select
                 echo "<td>" . htmlspecialchars($fila['id_respuesta']) . "</td>";
                 echo "<td>" . htmlspecialchars($fila['id_pregunta']) . "</td>";
                 echo "<td>" . htmlspecialchars($fila['respuestas']) . "</td>";
-                echo "<td><a href='editar_respuesta.php?id=" . urlencode($fila['id_respuesta']) . "'>Editar</a></td>";
+                echo "<td><button id='btnEditarColonia-". $fila['id_respuesta'] ."' data-id='". $fila['id_respuesta'] ."'>Editar</button></td>";
                 echo "</tr>";
             }
             echo "      </tbody></table>";

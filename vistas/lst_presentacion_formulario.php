@@ -18,7 +18,7 @@ $presentaciones = new Presentaciones();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
     <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" 
+    <script src="./js/jquery-3.7.1.js" 
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
             crossorigin="anonymous"></script>
 
@@ -105,24 +105,39 @@ $presentaciones = new Presentaciones();
             font-size: 14px;
         }
     }
+
+    .btn-estado {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+    font-size: 14px;
+}
+
+.btn-activo {
+    background-color: #28a745; /* Verde */
+}
+
+.btn-inactivo {
+    background-color: #dc3545; /* Rojo */
+}
+
+.btn-estado:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
 </style>
 </head>
 <body>
     <h1 style="text-align: center; color: #333;">Listado de Presentaciones</h1>
-    <table class="tabla">
-        <thead>
-            <tr class="tabla__fila1">
-                <th class="tabla__celda color1  bold size1">Título</th>
-                <th class="tabla__celda color1  bold size1">Imagen</th>
-                <th class="tabla__celda color1  bold size1">Video</th>
-                <th class="tabla__celda color1  bold size1">Descripción</th>
-                <th class="tabla__celda color1  bold size1">En Sistema</th>
-                <th class="tabla__celda color1  bold size1">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+
             <?php echo $presentaciones->generarContenidoTabla(); ?>
-        </tbody>
-    </table>
+    
+    <script src="./js/sweetalert2@11.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/update/dbo_presentacion_estatus.js"></script>
 </body>
 </html>

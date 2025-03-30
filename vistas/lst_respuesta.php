@@ -112,5 +112,9 @@ $consulta_observador = new consulta_observador();
     
             <?php echo $consulta_observador->obtener_respuestas(); ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/update/dbo_respuesta.js"></script>
 </body>
 </html>
