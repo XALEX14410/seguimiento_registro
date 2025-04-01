@@ -14,7 +14,7 @@ class bd_pregunta extends BaseDatos {
         $con = $this->getBD();
         $resultado = $con->query($sql);
         $con->close();
-    }
+    }0
 
     // Genero mi lista de preguntas
     public function lista_pregunta() {

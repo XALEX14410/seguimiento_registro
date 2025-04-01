@@ -4,45 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Selección</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./../css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./../css/estilos.css">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="./../css/icons/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
   <div class="container mt-5">
     <section class="bg-white p-4 shadow rounded">
-      <h1 class="text-center mb-4 text-primary">Generador de Selección <i class="bi bi-lightbulb"></i></h1>
-
+      <h1 class="text-center mb-4 text-primary">
+        Generador de Selección 
+        <i class="bi bi-lightbulb"></i>
+      </h1>
+      
       <div id="contentContainer" class="mb-3 border p-3 rounded bg-light">
-        <p><i class="bi bi-info-circle"></i> Aquí puedes generar tus selecciones de manera rápida.</p>
+        <p>
+          <i class="bi bi-info-circle"></i> 
+          Aquí puedes generar tus selecciones de manera rápida.
+        </p>
       </div>
+      
       <form method="POST" id="form_pregunta">
-      <div class="envio_perron text-end mt-3">
-        <!-- Botón de envío con icono dentro -->
-        <button class="btn btn-success" id="saveButton">
-          <i class="bi bi-send"></i> Enviar
-        </button>
-      </div>
+        <div class="text-end mt-3">
+          <button class="btn btn-success" id="saveButton">
+            <i class="bi bi-send"></i> 
+            Enviar
+          </button>
+        </div>
       </form>
     </section>
-
-    <!-- Botón flotante -->
-    <button class="boton-generar btn btn-primary position-fixed d-flex align-items-center justify-content-center shadow-lg" onclick="generateSelect()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-      </svg>
-      <span class="ms-2">Generar</span>
-    </button>
   </div>
-<!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Bootstrap JS -->
+  <!-- Botón flotante -->
+  <button class="btn btn-primary position-fixed d-flex align-items-center justify-content-center shadow-lg" onclick="generateSelect()" style="bottom: 20px; right: 20px; border-radius: 50%; width: 50px; height: 50px;">
+    <i class="bi bi-plus-circle-fill"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="./../js/script.js"></script>
   <script src="./../js/insert/dbo_pregunta.js"></script>
 </body>
